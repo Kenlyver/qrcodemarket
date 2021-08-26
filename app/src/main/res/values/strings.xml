@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">QRCodeMarket</string>
+    <string name="qr_code_market">QR Code Market</string>
+    <string name="enter_your_login_name">Enter your login name</string>
+    <string name="let_s_join_hands_to_prevent_covid">Let\'s join hands to prevent Covid</string>
+    <string name="login">Login</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="quick_login">Quick login with social account</string>
+    <string name="you_dont_have_account">"You don't have account?"</string>
+    <string name="sign_up">
+        <u>Sign Up</u>
+    </string>
+    <string name="google_account">Google Account</string>
+    <string name="facebook_account">Facebook Account</string>
+    <string name="enter_your_full_name">Enter your full name</string>
+    <string name="enter_your_date_of_birth">Enter your date of birth</string>
+    <string name="enter_your_number_phone">Enter your number phone</string>
+    <string name="you_have_account">You have account?</string>
+    <string name="sign_in">
+        <u>Sign In</u>
+    </string>
+    <string name="register">Register</string>
+    <string name="continue_button">Continue</string>
+    <string name="facebook_app_id">444724829996754</string>
+    <string name="fb_login_protocol_scheme">fb444724829996754</string>
+    <string name="enter_your_address">Enter your address</string>
+    <string name="enter_your_address2"><font size="16">Enter your address</font></string>
+    <string name="complete">Complete</string>
+
+    <string-array name="Province">
+        <item>Province</item>
+    </string-array>
+    <string-array name="District">
+        <item>District</item>
+    </string-array>
+    <string-array name="Ward">
+        <item>Ward</item>
+    </string-array>
+
+
+</resources>
