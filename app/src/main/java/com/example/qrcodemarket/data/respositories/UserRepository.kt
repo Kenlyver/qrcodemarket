@@ -13,7 +13,4 @@ class UserRepository(
         return apiRequest { api.userLogin(loginName,password)}
     }
 
-    suspend fun userSignUp(loginName: String,password: String,fullName: String,dateOfBirth: String,numberPhone: String):AuthResponse{
-        return apiRequest { api.userSignUp(loginName, password, fullName, dateOfBirth, numberPhone) }
-    }
 }

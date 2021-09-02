@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:orientation="vertical">
+
+    <ImageView
+            android:id="@+id/imgShield5k"
+            android:layout_width="320dp"
+            android:layout_height="150dp"
+            android:background="@drawable/shield5k"
+            tools:ignore="MissingConstraints" android:contentDescription="@string/checkgif"/>
+
+    <ImageView
+            android:id="@+id/checkgif"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/checkgif"
+            android:contentDescription="@string/shield5k"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#00FFB3"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Scan successfully!!"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textColor="#00FFB3"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Please follow the '5K' rules" />
+
+</LinearLayout>

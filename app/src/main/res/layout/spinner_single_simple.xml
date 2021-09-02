@@ -1,0 +1,12 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:singleLine="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="marquee"
+    android:layout_marginLeft="-5dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:textColor="@color/colorBlack"
+    android:drawableRight="@drawable/ic_expandbutton"
+    android:textSize="@dimen/text_medium"/>

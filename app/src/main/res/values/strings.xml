@@ -25,7 +25,9 @@
     <string name="facebook_app_id">444724829996754</string>
     <string name="fb_login_protocol_scheme">fb444724829996754</string>
     <string name="enter_your_address">Enter your address</string>
-    <string name="enter_your_address2"><font size="16">Enter your address</font></string>
+    <string name="enter_your_address2">
+        <font size="16">Enter your address</font>
+    </string>
     <string name="complete">Complete</string>
 
     <string-array name="Province">
@@ -37,6 +39,10 @@
     <string-array name="Ward">
         <item>Ward</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shield5k">shield5k</string>
+    <string name="checkgif">checkgif</string>
 
 
 </resources>

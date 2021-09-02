@@ -61,21 +61,45 @@
                 android:layout_marginTop="25dp"
                 android:autofillHints=""
                 android:inputType="text"/>
-        <EditText
-                android:id="@+id/edtPassword"
-                android:text="@={viewModel.password}"
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/enter_your_password"
-                android:background="@drawable/border"
-                android:drawableStart="@drawable/ic_padlock"
-                android:drawableEnd="@drawable/ic_eye_hide"
-                android:drawablePadding="8dp"
+                app:passwordToggleEnabled="true"
+                android:hint=" "
                 android:layout_marginLeft="34dp"
                 android:layout_marginRight="34dp"
-                android:layout_marginTop="20dp"
-                android:inputType="textPassword"
-                android:autofillHints=""/>
+                android:layout_marginTop="10dp">
+
+            <EditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+
+                    android:background="@drawable/border"
+                    android:text="@={viewModel.password}"
+                    android:drawableStart="@drawable/ic_padlock"
+                    android:drawablePadding="8dp"
+                    android:layout_height="45dp"
+                    android:hint="@string/enter_your_password"
+                    android:inputType="textPassword"
+                    android:autofillHints=""
+                    />
+        </com.google.android.material.textfield.TextInputLayout>
+<!--        <EditText-->
+<!--                android:id="@+id/edtPassword"-->
+<!--                android:text="@={viewModel.password}"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/enter_your_password"-->
+<!--                android:background="@drawable/border"-->
+<!--                android:drawableStart="@drawable/ic_padlock"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:layout_marginLeft="34dp"-->
+<!--                android:layout_marginRight="34dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:autofillHints=""/>-->
 
         <TextView
                 android:id="@+id/txtForgotPassword"
@@ -119,17 +143,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
-        >
-            <ImageView
-                    android:id="@+id/imgGoogleAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <Button
+                    android:id="@+id/btnGoogleAccount"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/ic_google_icon"
                     android:contentDescription="@string/google_account"/>
-            <ImageView
-                    android:id="@+id/imgFacebookAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            <Button
+                    android:id="@+id/btnFacebookAccount"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/ic_facebook_icon"
                     android:layout_marginStart="20dp"
                     android:contentDescription="@string/facebook_account"/>

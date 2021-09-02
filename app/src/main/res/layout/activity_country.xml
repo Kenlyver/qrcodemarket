@@ -9,7 +9,7 @@
                 type="com.example.qrcodemarket.ui.auth.AuthViewModel"/>
     </data>
     <LinearLayout
-            android:id="@+id/login_layout"
+            android:id="@+id/country_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.home.CountryActivity"
@@ -66,12 +66,18 @@
                 android:layout_marginLeft="34dp"
                 android:layout_marginRight="34dp"
                 android:padding="15dp"
-                android:drawableEnd="@drawable/ic_expandbutton"
+                android:spinnerMode="dropdown"
                 android:drawablePadding="8dp"
                 android:entries="@array/Province"
-                android:spinnerMode="dropdown"
                 android:background="@drawable/border"
                 android:layout_marginTop="25dp"/>
+        <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="@dimen/progressBarMedium"
+                android:layout_height="@dimen/progressBarMedium"
+                android:layout_marginTop="-35dp"
+                android:layout_gravity="right"
+                android:progressTint="@color/colorPrimary"/>
         <Spinner
                 android:id="@+id/district_spinner"
                 android:layout_width="match_parent"
