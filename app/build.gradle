@@ -29,7 +29,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.android.trackmysleepqualityrecyclerview"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -67,6 +67,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+
+
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
@@ -119,6 +121,10 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation "com.github.zcweng:switch-button:0.0.3@aar"
+
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha06"
 
 
 

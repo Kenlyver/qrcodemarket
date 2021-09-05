@@ -2,6 +2,7 @@ package com.example.qrcodemarket.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.example.qrcodemarket.R
 import kotlinx.android.synthetic.main.activity_home.*
@@ -16,7 +17,6 @@ class HomeActivity : AppCompatActivity() {
         setViewPagerAdapter()
         setBottomNavigation()
         setViewPagerListener()
-
 
     }
 

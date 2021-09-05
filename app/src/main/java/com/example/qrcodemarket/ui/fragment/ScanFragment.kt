@@ -1,7 +1,9 @@
 package com.example.qrcodemarket.ui.fragment
 
-import android.os.Bundle
-import android.os.Handler
+import android.content.Context
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.qrcodemarket.R
 import com.example.qrcodemarket.data.model.InsertAccessMarket
-import com.example.qrcodemarket.data.model.InsertUser
 import com.example.qrcodemarket.data.network.InsertApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
-import com.example.qrcodemarket.util.toast
 import com.google.zxing.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -27,35 +26,36 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
+class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
 
-    companion object{
-        fun newInstance():ScanFragment{
+    companion object {
+        fun newInstance(): ScanFragment {
             return ScanFragment()
         }
     }
-    private var checkInMarket:Boolean? = false
-    private lateinit var mView:View
-    private lateinit var scannerView : ZXingScannerView
-    var disposable : Disposable? = null
+
+    private var checkInMarket: Boolean? = false
+    private lateinit var mView: View
+    private lateinit var scannerView: ZXingScannerView
+    var disposable: Disposable? = null
 
     val insertApi by lazy {
         InsertApi.create()
     }
 
-    var citizenId:String? = null
-    var marketId:String? = null
-    var timeIn:String? = null
-    var timeOut:String? = null
-    var date:String? = null
-    var idMarketIn:String?=null
+    var citizenId: String? = null
+    var marketId: String? = null
+    var timeIn: String? = null
+    var timeOut: String? = null
+    var date: String? = null
+    var idMarketIn: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,
-        savedInstanceState: Bundle?)
-    : View? {
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-        mView = inflater.inflate(R.layout.fragment_scan,container,false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    )
+            : View? {
+        mView = inflater.inflate(R.layout.fragment_scan, container, false)
         initializeQRScanner()
         onClicks()
 
@@ -64,9 +64,9 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
 
     private fun onClicks() {
         mView.imgFlash.setOnClickListener {
-            if(it.isSelected){
-               offFlashLight()
-            }else{
+            if (it.isSelected) {
+                offFlashLight()
+            } else {
                 onFlashLight()
             }
         }
@@ -84,9 +84,9 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
 
     private fun initializeQRScanner() {
         scannerView = ZXingScannerView(context!!)
-        scannerView.setBackgroundColor(ContextCompat.getColor(context!!,R.color.colorGrey))
-        scannerView.setBorderColor(ContextCompat.getColor(context!!,R.color.blue))
-        scannerView.setLaserColor(ContextCompat.getColor(context!!,R.color.blue))
+        scannerView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorGrey))
+        scannerView.setBorderColor(ContextCompat.getColor(context!!, R.color.blue))
+        scannerView.setLaserColor(ContextCompat.getColor(context!!, R.color.blue))
         scannerView.setBorderStrokeWidth(10)
         scannerView.setAutoFocus(true)
         scannerView.setResultHandler(this)
@@ -95,14 +95,17 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
         startQrCamera()
     }
 
-    private fun startQrCamera(){
+    private fun startQrCamera() {
         scannerView.startCamera()
     }
 
+    override fun onStop() {
+        super.onStop()
+    }
     override fun onResume() {
         super.onResume()
         scannerView.setResultHandler(this) // Register ourselves as a handler for scan results.
-        scannerView.startCamera() // Start camera on resume
+        scannerView.startCamera()
     }
 
     override fun onPause() {
@@ -116,34 +119,53 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
     }
 
     override fun handleResult(rawResult: Result?) {
-        var result:String = rawResult?.text.toString()
-        val inString:String = "In"
-        val outString:String = "Out"
+        var result: String = rawResult?.text.toString()
+        val inString: String = "In"
+        val outString: String = "Out"
         val checkIn = result.endsWith(inString)
         val checkOut = result.endsWith(outString)
-        if(checkIn){
+        if (checkIn) {
+            if (AppPreferences.checksound == true) {
+                val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
+                tg.startTone(ToneGenerator.TONE_PROP_BEEP)
+            }
+            if (AppPreferences.checkvibrate == true) {
+                vibratePhone()
+            }
             timeIn = getCurrentTime()
             idMarketIn = result.get(0).toString()
             var dialog = CustomDialog()
-            dialog.show(childFragmentManager,"custom")
+            dialog.show(childFragmentManager, "custom")
             checkInMarket = true
-        }
-        else if(checkInMarket == true && checkOut){
+        } else if (checkInMarket == true && checkOut) {
+            if (AppPreferences.checksound == true) {
+                val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
+                tg.startTone(ToneGenerator.TONE_CDMA_CALL_SIGNAL_ISDN_PING_RING)
+            }
+            if (AppPreferences.checkvibrate == true) {
+                vibratePhone()
+            }
             timeOut = getCurrentTime()
             date = getCurrentDate()
-            citizenId =AppPreferences.citizenId
+            citizenId = AppPreferences.citizenId
             marketId = result.get(0).toString()
-            if(idMarketIn.equals(marketId)){
+            if (idMarketIn.equals(marketId)) {
                 insertAccessData()
-                Toast.makeText(context!!,"See you again later",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context!!, "See you again later", Toast.LENGTH_SHORT).show()
                 checkInMarket = false
+            } else {
+                if (AppPreferences.checksound == true) {
+                    val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
+                    tg.startTone(ToneGenerator.TONE_CDMA_SOFT_ERROR_LITE)
+                }
+                Toast.makeText(context!!, "You scan wrong QRcode in this market", Toast.LENGTH_SHORT).show()
             }
-            else{
-                Toast.makeText(context!!,"You scan wrong QRcode in this market",Toast.LENGTH_SHORT).show()
+        } else {
+            if (AppPreferences.checksound == true) {
+                val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
+                tg.startTone(ToneGenerator.TONE_CDMA_SOFT_ERROR_LITE)
             }
-        }
-        else{
-            Toast.makeText(context!!,"You scan wrong QRcode in this market",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context!!, "You scan wrong QRcode in this market", Toast.LENGTH_SHORT).show()
         }
 
         Handler().postDelayed({
@@ -153,19 +175,19 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
 
     }
 
-    fun getCurrentTime():String{
+    fun getCurrentTime(): String {
         val sdf = SimpleDateFormat("HH:mm:ss")
         return sdf.format(Date())
     }
 
-    fun getCurrentDate():String{
+    fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         return sdf.format(Date())
     }
 
-    private fun insertAccessData(){
+    private fun insertAccessData() {
         val insertAccess: InsertAccessMarket.Data
-        insertAccess= InsertAccessMarket.Data(citizenId!!,marketId!!,timeIn!!,timeOut!!,date!!)
+        insertAccess = InsertAccessMarket.Data(citizenId!!, marketId!!, timeIn!!, timeOut!!, date!!)
         disposable = insertApi.accessMarket(insertAccess)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -180,6 +202,15 @@ class ScanFragment : Fragment(),ZXingScannerView.ResultHandler {
                     Toast.makeText(context!!, error.message, Toast.LENGTH_SHORT).show()
                 }
             )
+    }
+
+    fun Fragment.vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
     }
 
 

@@ -15,6 +15,8 @@ object AppPreferences {
     private val PASSWORD = Pair("password", "")
     private val ROLE = Pair("role", "")
     private val CITIZENID = Pair("citizenId", "")
+    private val CHECKSOUND = Pair("checksound", false)
+    private val CHECKVIBRATE = Pair("checkvibrate", false)
 
 
     fun init(context: Context) {
@@ -56,5 +58,15 @@ object AppPreferences {
         get() = preferences.getString(CITIZENID.first, CITIZENID.second) ?: ""
         set(value) = preferences.edit {
             it.putString(CITIZENID.first, value)
+        }
+    var checksound: Boolean
+        get() = preferences.getBoolean(CHECKSOUND.first, CHECKSOUND.second)
+        set(value) = preferences.edit {
+            it.putBoolean(CHECKSOUND.first, value)
+        }
+    var checkvibrate: Boolean
+        get() = preferences.getBoolean(CHECKVIBRATE.first, CHECKVIBRATE.second)
+        set(value) = preferences.edit {
+            it.putBoolean(CHECKVIBRATE.first, value)
         }
 }

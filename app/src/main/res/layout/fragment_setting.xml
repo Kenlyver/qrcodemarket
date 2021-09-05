@@ -1,31 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   tools:context=".ui.fragment.SettingFragment">
-    <include layout="@layout/toolbar_setting"/>
-    <TextView
-            android:id="@+id/txtSettingText"
-            android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:id="@+id/settingFragment"
+        android:background="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.fragment.SettingFragment">
+    <androidx.appcompat.widget.Toolbar
             android:layout_height="wrap_content"
-            android:text="Setting View"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:ignore="MissingConstraints"/>
+            android:layout_width="match_parent"
+            android:background="@color/blue"
+            android:id="@+id/toolbar_set"
+            tools:ignore="MissingConstraints">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+            <TextView
+                    android:id="@+id/txtLayoutName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/setting"
+                    android:textSize="22sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+            />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_set"
+            android:layout_marginTop="30dp"
+            tools:ignore="MissingConstraints">
 
-    <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:gravity="center"
-            tools:ignore="MissingConstraints" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtSettingText"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+        >
+
+            <TextView
+                    android:id="@+id/txtAccountSetting"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/ic_admin_setting"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/account_setting"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_set">
+
+            <TextView
+                    android:id="@+id/txtDisplay"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/ic_display"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/display"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+        >
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@drawable/ic_volume"
+                    android:drawablePadding="8dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/make_sound"/>
+            <com.suke.widget.SwitchButton
+                    android:id="@+id/switch_button_sound"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="155dp"
+            />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+        >
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@drawable/ic_vibrate"
+                    android:drawablePadding="8dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/vibrate"/>
+            <com.suke.widget.SwitchButton
+                    android:id="@+id/switch_button_vibrate"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="190dp"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_set">
+
+            <TextView
+                    android:id="@+id/txtPirvacy"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/ic_privacy"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/privacy"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_set">
+
+            <TextView
+                    android:id="@+id/txtHelpAndFeedback"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/ic_helpfeedback"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/help_and_feedback"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting"
+                tools:ignore="MissingConstraints"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_set">
+
+            <TextView
+                    android:id="@+id/txtIntroduction"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/ic_introduction"
+                    android:drawablePadding="8dp"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:text="@string/introduction"/>
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/txtVersion"
+                android:layout_width="match_parent"
+                android:drawablePadding="8dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="Version Application:1.1.1.1"/>
+
+        <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
+                android:text="@string/logout"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:background="@drawable/button"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+        />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
