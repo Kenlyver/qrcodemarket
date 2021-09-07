@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.qrcodemarket.R
+import com.example.qrcodemarket.data.model.AccessAdapter
 import com.example.qrcodemarket.data.model.InsertAccessMarket
 import com.example.qrcodemarket.data.network.InsertApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
@@ -20,6 +21,7 @@ import com.google.zxing.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_scan.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.text.SimpleDateFormat

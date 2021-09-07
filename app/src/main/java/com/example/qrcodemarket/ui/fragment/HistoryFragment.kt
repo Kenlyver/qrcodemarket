@@ -17,7 +17,13 @@ import com.example.qrcodemarket.ui.auth.AppPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class HistoryFragment : Fragment() {
@@ -29,7 +35,6 @@ class HistoryFragment : Fragment() {
     }
 
     private lateinit var mView:View
-
     var citizenId:String? = null
     var date:String?=null
     var disposable : Disposable? = null
@@ -48,6 +53,7 @@ class HistoryFragment : Fragment() {
         val toolbar: Toolbar = mView.findViewById(R.id.toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.show()
+        loop()
         return mView.rootView
     }
 
@@ -55,6 +61,7 @@ class HistoryFragment : Fragment() {
 
         mView.recycleHistory.layoutManager = LinearLayoutManager(context)
         mView.recycleHistory.adapter = AccessAdapter(dataAccess)
+
     }
 
     private fun getAccessDataFlowMarket(){
@@ -129,5 +136,14 @@ class HistoryFragment : Fragment() {
         getAccessData()
         super.onResume()
 
+    }
+    private fun loop() {
+        CoroutineScope(IO).launch {
+            delay(5000)
+            CoroutineScope(Main).launch {
+                getAccessData()
+                loop()
+            }
+        }
     }
 }

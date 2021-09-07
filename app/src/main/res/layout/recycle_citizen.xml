@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+        <ImageView
+                android:id="@+id/imgPersonFace"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/person_face_mask"
+        />
+
+        <TextView
+                android:id="@+id/txtCitizenName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nguyễn Thị A"
+                android:layout_toEndOf="@id/imgPersonFace"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:id="@+id/txtIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time in: "
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/imgPersonFace"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtInTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:30"
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/txtIn"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Time Out: "
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/txtInTime"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtOutTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9:30"
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/txtOut"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Date: "
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/txtOutTime"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtDateEx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01-09-2021"
+                android:textSize="12sp"
+                android:layout_toEndOf="@id/txtDate"
+                android:layout_below="@id/txtCitizenName"
+        />
+        <TextView
+                android:id="@+id/txtMarketName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                android:layout_toEndOf="@id/imgPersonFace"
+                android:layout_below="@id/txtIn"
+        />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

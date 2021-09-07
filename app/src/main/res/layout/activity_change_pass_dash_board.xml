@@ -2,13 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:background="@color/white"
-        android:id="@+id/changePassword"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.fragment.ChangePasswordFragment">
+        tools:context=".ui.admin.ChangePassDashBoardActivity">
 
     <androidx.appcompat.widget.Toolbar
             android:layout_height="wrap_content"
@@ -60,7 +57,7 @@
                 android:layout_marginTop="10dp">
 
             <EditText
-                    android:id="@+id/edtOldPassword"
+                    android:id="@+id/edtOldPass"
                     android:layout_width="match_parent"
                     android:background="@drawable/border"
                     android:drawableStart="@drawable/ic_padlock"
@@ -84,7 +81,7 @@
                 android:layout_marginTop="10dp">
 
             <EditText
-                    android:id="@+id/edtNewPassword"
+                    android:id="@+id/edtNewPass"
                     android:layout_width="match_parent"
                     android:background="@drawable/border"
                     android:drawableStart="@drawable/ic_padlock"
@@ -109,7 +106,7 @@
                 android:layout_marginTop="10dp">
 
             <EditText
-                    android:id="@+id/edtConfirmPassword"
+                    android:id="@+id/edtConfirmPass"
                     android:layout_width="match_parent"
                     android:background="@drawable/border"
                     android:drawableStart="@drawable/ic_padlock"
@@ -123,7 +120,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-                android:id="@+id/btnChangePass"
+                android:id="@+id/btnChangePassword"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -139,6 +136,7 @@
                 android:background="@drawable/hand"
                 android:layout_width="400dp"
                 android:layout_height="390dp"
+                android:layout_marginTop="10dp"
                 tools:ignore="MissingConstraints"
         />
     </LinearLayout>

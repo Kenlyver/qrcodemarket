@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.qrcodemarket.R
 import com.example.qrcodemarket.data.network.response.User
 import com.example.qrcodemarket.databinding.ActivityLoginBinding
+import com.example.qrcodemarket.ui.admin.DashboardActivity
 import com.example.qrcodemarket.ui.home.HomeActivity
 import com.example.qrcodemarket.util.hide
 import com.example.qrcodemarket.util.show
@@ -29,11 +31,12 @@ import org.kodein.di.generic.instance
 
 
 const val RC_SIGN_IN = 123
-class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiClient.OnConnectionFailedListener {
+
+class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware, GoogleApiClient.OnConnectionFailedListener {
 
     override val kodein by kodein()
 
-    private val factory:AuthViewModelFactory by instance()
+    private val factory: AuthViewModelFactory by instance()
 
     var mGoogleApiClient: GoogleApiClient? = null
 
@@ -41,13 +44,19 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
         super.onCreate(savedInstanceState)
         AppPreferences.init(this)
 
-        if(AppPreferences.isLogin){
-            Intent(this,HomeActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(it)
+        if (AppPreferences.isLogin) {
+            if(AppPreferences.role.equals("Admin")){
+                Intent(this,DashboardActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
+            }else{
+                Intent(this,HomeActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
             }
-        }
-        else{
+        } else {
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
@@ -57,11 +66,11 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
 
-            val binding:ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-            val viewModel = ViewModelProviders.of(this,factory).get(AuthViewModel::class.java)
+            val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+            val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
 
 
-            binding.viewModel =viewModel
+            binding.viewModel = viewModel
             viewModel.authListener = this
 
             binding.btnGoogleAccount.visibility = View.VISIBLE
@@ -84,18 +93,28 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
         progress_bar.show()
     }
 
-    override fun onSuccess(user:User) {
+    override fun onSuccess(user: User) {
         progress_bar.hide()
-        var role:String = user.role.toString()
-        var citizenId:String = user.citizenid.toString()
+        var role: String = user.role.toString()
+        var fullName:String = user.fullName.toString()
+        var citizenId: String = user.citizenid.toString()
         AppPreferences.citizenId = citizenId
-        Intent(this,HomeActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
+        AppPreferences.role = role
+        AppPreferences.fullname = fullName
+        if(role.equals("Admin")){
+            Intent(this,DashboardActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }else{
+            Intent(this,HomeActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
         }
     }
 
-    override fun onFailure(message:String) {
+    override fun onFailure(message: String) {
         progress_bar.hide()
         login_layout.snackbar(message)
     }
@@ -116,7 +135,7 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
             Log.e("TAG", "display name: " + acct.displayName)
             val personName = acct.displayName
             signOut()
-            Intent(this,HomeActivity::class.java).also {
+            Intent(this, HomeActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }
@@ -125,6 +144,7 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
             // Signed out, show unauthenticated UI.
         }
     }
+
     private fun signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
             object : ResultCallback<Status?> {
@@ -133,7 +153,8 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware, GoogleApiCli
                 }
             })
     }
+
     override fun onConnectionFailed(p0: ConnectionResult) {
-        Log.i("connect","Fail")
+        Log.i("connect", "Fail")
     }
 }

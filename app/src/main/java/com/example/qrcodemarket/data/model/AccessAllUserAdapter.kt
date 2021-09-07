@@ -5,34 +5,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qrcodemarket.R
+import kotlinx.android.synthetic.main.fragment_account_setting.view.*
+import kotlinx.android.synthetic.main.recycle_citizen.view.*
 import kotlinx.android.synthetic.main.recycle_item.view.*
+import kotlinx.android.synthetic.main.recycle_item.view.txtDateEx
+import kotlinx.android.synthetic.main.recycle_item.view.txtInTime
+import kotlinx.android.synthetic.main.recycle_item.view.txtOutTime
 
-class AccessAdapter(var access:List<getDataAccess.Data>):RecyclerView.Adapter<AccessAdapter.AccessViewHolder>() {
+class AccessAllUserAdapter(var access:List<getAccessAllUser.Data>): RecyclerView.Adapter<AccessAllUserAdapter.AccessViewHolder>()  {
 
-    class AccessViewHolder(val view: View):RecyclerView.ViewHolder(view)
+    class AccessViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccessViewHolder {
         return AccessViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.recycle_item,parent,false)
+                .inflate(R.layout.recycle_citizen,parent,false)
         )
     }
 
     override fun onBindViewHolder(holder: AccessViewHolder, position: Int) {
         val dataAccess = access[position]
 
-        holder.view.txtNameMarket.text = dataAccess.marketName
+
+        holder.view.txtCitizenName.text = dataAccess.fullName
+        holder.view.txtMarketName.text = dataAccess.marketName
         holder.view.txtInTime.text = dataAccess.timeIn
         holder.view.txtOutTime.text = dataAccess.timeOut
         holder.view.txtDateEx.text = dataAccess.date
-        holder.view.txtLocationEx.text= dataAccess.location
 
     }
 
     override fun getItemCount() = access.size
-
-    fun updateData(modelList:List<getDataAccess.Data>){
-        access = modelList
-        notifyDataSetChanged()
-    }
 }

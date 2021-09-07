@@ -1,12 +1,9 @@
-package com.example.qrcodemarket.ui.fragment
+package com.example.qrcodemarket.ui.admin
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -19,17 +16,12 @@ import com.example.qrcodemarket.ui.auth.LoginActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_change_pass_dash_board.*
 import kotlinx.android.synthetic.main.fragment_change_password.*
+import kotlinx.android.synthetic.main.fragment_change_password.imgBackArrow
 import kotlinx.android.synthetic.main.fragment_change_password.view.*
-import kotlinx.android.synthetic.main.fragment_change_password.view.imgBackArrow
 
-
-class ChangePasswordFragment : Fragment() {
-    companion object {
-        fun newInstance(): ChangePasswordFragment {
-            return ChangePasswordFragment()
-        }
-    }
+class ChangePassDashBoardActivity : AppCompatActivity() {
 
     var disposable: Disposable? = null
     var loginName: String? = null
@@ -40,42 +32,43 @@ class ChangePasswordFragment : Fragment() {
         InsertApi.create()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val mView = inflater.inflate(R.layout.fragment_change_password, container, false)
-        mView.imgBackArrow.setOnClickListener {
-            childFragmentManager.beginTransaction().add(R.id.changePassword, AccountSettingFragment.newInstance())
-                .addToBackStack(null).commit()
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_change_pass_dash_board)
 
-        mView.btnChangePass.setOnClickListener {
-            currentPassword = edtOldPassword.text.toString()
-            newPassword = edtNewPassword.text.toString()
-            confirmPassword = edtConfirmPassword.text.toString()
-            if(currentPassword.isNullOrEmpty()){
-                edtOldPassword.requestFocus()
-                edtOldPassword.setError("Please enter your old password")
-            }
-            else if(newPassword.isNullOrEmpty()){
-                edtNewPassword.requestFocus()
-                edtNewPassword.setError("New password is request")
-            }
-            else if(confirmPassword.isNullOrEmpty()){
-                edtConfirmPassword.requestFocus()
-                edtConfirmPassword.setError("Number phone is request")
-            }else updatePassword()
-        }
-        val imageHand: ImageView =mView.findViewById(R.id.imgHand)
+        val imageHand: ImageView =findViewById(R.id.imgHand)
 
         Glide.with(this)
             .load(R.drawable.hand)
-            .into(imageHand);
-        return mView.rootView
+            .into(imageHand)
+
+        imgBackArrow.setOnClickListener {
+            Intent(this, EditDashboardActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }
+
+        btnChangePassword.setOnClickListener {
+            currentPassword = edtOldPass.text.toString()
+            newPassword = edtNewPass.text.toString()
+            confirmPassword = edtConfirmPass.text.toString()
+            if(currentPassword.isNullOrEmpty()){
+                edtOldPass.requestFocus()
+                edtOldPass.setError("Please enter your old password")
+            }
+            else if(newPassword.isNullOrEmpty()){
+                edtNewPass.requestFocus()
+                edtNewPass.setError("New password is request")
+            }
+            else if(confirmPassword.isNullOrEmpty()){
+                edtConfirmPass.requestFocus()
+                edtConfirmPass.setError("Number phone is request")
+            }else updatePass()
+        }
     }
 
-    private fun updatePassword() {
+    private fun updatePass() {
         if (!newPassword.equals(confirmPassword)) {
             edtConfirmPassword.requestFocus()
             edtConfirmPassword.setError("Password not match")
@@ -89,10 +82,10 @@ class ChangePasswordFragment : Fragment() {
                 .subscribe(
                     { result ->
                         if(result.error == false){
-                            edtOldPassword.setText("")
-                            edtNewPassword.setText("")
-                            edtConfirmPassword.setText("")
-                            val builder = context?.let { AlertDialog.Builder(it) }
+                            edtOldPass.setText("")
+                            edtNewPass.setText("")
+                            edtConfirmPass.setText("")
+                            val builder = this?.let { AlertDialog.Builder(it) }
                             builder?.setTitle("Success!!")
                             builder?.setMessage("Password is change, logout ?")
 
@@ -107,7 +100,7 @@ class ChangePasswordFragment : Fragment() {
                             Log.i("abc", "success: " + result.message)
                         }
                         else{
-                            val builder = context?.let { AlertDialog.Builder(it) }
+                            val builder = this?.let { AlertDialog.Builder(it) }
                             builder?.setTitle("Fail!!")
                             builder?.setMessage("Try again?")
 
@@ -124,7 +117,7 @@ class ChangePasswordFragment : Fragment() {
                     },
                     { error ->
                         Log.i("abc", "fail: " + error.localizedMessage + error.message + error)
-                        Toast.makeText(context!!, error.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                     }
                 )
         }
@@ -136,8 +129,10 @@ class ChangePasswordFragment : Fragment() {
         AppPreferences.password = ""
         AppPreferences.role = ""
         AppPreferences.fullname = ""
-        val intent = Intent(getActivity(), LoginActivity::class.java)
-        getActivity()?.startActivity(intent)
+        Intent(this, LoginActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(it)
+        }
     }
 
 }

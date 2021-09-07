@@ -55,6 +55,19 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="full_name">Full name</string>
     <string name="address">Address</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_your_old_password">Enter your old password</string>
+    <string name="enter_your_new_password">Enter your new password</string>
+    <string name="qr_market_dashboard">QR Market Dashboard</string>
+    <string name="name">A</string>
+    <string name="market_manager">Market Manager</string>
+    <string name="image_dashboard">image_dashboard</string>
+    <string name="statistical">Statistical</string>
+    <string name="notification">Notification</string>
+    <string name="enter_name_market">Enter name market</string>
+    <string name="enter_market_location">Enter market location</string>
+    <string name="enter_url_image_qrcode_out">Enter url image qrcode(out)</string>
+    <string name="enter_url_image_qrcode_in">Enter url image qrcode(in)</string>
 
 
 </resources>

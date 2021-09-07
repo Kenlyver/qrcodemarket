@@ -13,6 +13,7 @@ object AppPreferences {
     private val IS_LOGIN = Pair("is_login", false)
     private val USERNAME = Pair("username", "")
     private val PASSWORD = Pair("password", "")
+    private val FULLNAME = Pair("fullname", "")
     private val ROLE = Pair("role", "")
     private val CITIZENID = Pair("citizenId", "")
     private val CHECKSOUND = Pair("checksound", false)
@@ -47,6 +48,12 @@ object AppPreferences {
         get() = preferences.getString(PASSWORD.first, PASSWORD.second) ?: ""
         set(value) = preferences.edit {
             it.putString(PASSWORD.first, value)
+        }
+
+    var fullname: String
+        get() = preferences.getString(FULLNAME.first, FULLNAME.second) ?: ""
+        set(value) = preferences.edit {
+            it.putString(FULLNAME.first, value)
         }
 
     var role: String

@@ -1,17 +1,14 @@
 package com.example.qrcodemarket.data.network
 
-import com.example.qrcodemarket.data.model.Access
 import com.example.qrcodemarket.data.model.InsertUser
 import com.example.qrcodemarket.data.network.response.AuthResponse
 import com.example.qrcodemarket.data.network.response.NetworkConnectionInterceptor
-import io.reactivex.Observable
 import retrofit2.Call
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import java.util.*
 
 
 interface MyApi {

@@ -16,20 +16,35 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.QRCodeMarket"
             android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.home.CountryActivity">
-        </activity>
-        <activity android:name=".ui.home.HomeActivity"
-                  android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".ui.auth.RegisterActivity">
-        </activity>
-        <activity android:name=".ui.auth.LoginActivity">
+        <activity android:name=".ui.home.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.admin.ChangePassDashBoardActivity">
+        </activity>
+        <activity android:name=".ui.admin.EditDashboardActivity">
+        </activity>
+        <activity android:name=".ui.admin.StatisticalActivity">
+        </activity>
+        <activity android:name=".ui.admin.AddMarketActivity">
+        </activity>
+        <activity android:name=".ui.admin.MarketManagerActivity">
+        </activity>
+        <activity android:name=".ui.admin.DashboardActivity">
+        </activity>
+        <activity android:name=".ui.home.CountryActivity">
+        </activity>
+        <activity
+                android:name=".ui.home.HomeActivity"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name=".ui.auth.RegisterActivity">
+        </activity>
+        <activity android:name=".ui.auth.LoginActivity">
+
         </activity>
 
         <meta-data

@@ -1,28 +1,27 @@
-package com.example.qrcodemarket.ui.fragment
+package com.example.qrcodemarket.ui.admin
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.example.qrcodemarket.R
 import com.example.qrcodemarket.data.model.UpdateUser
 import com.example.qrcodemarket.data.network.InsertApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
+import com.example.qrcodemarket.ui.fragment.SettingFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_edit_dashboard.*
 import kotlinx.android.synthetic.main.fragment_account_setting.*
+import kotlinx.android.synthetic.main.fragment_account_setting.btnSaveChange
+import kotlinx.android.synthetic.main.fragment_account_setting.edtAddress
 import kotlinx.android.synthetic.main.fragment_account_setting.edtDateOfBirth
 import kotlinx.android.synthetic.main.fragment_account_setting.edtFullName
 import kotlinx.android.synthetic.main.fragment_account_setting.edtNumberPhone
@@ -30,13 +29,8 @@ import kotlinx.android.synthetic.main.fragment_account_setting.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+class EditDashboardActivity : AppCompatActivity() {
 
-class AccountSettingFragment : Fragment() {
-    companion object{
-        fun newInstance():AccountSettingFragment{
-            return AccountSettingFragment()
-        }
-    }
     var citizenId:String?= null
     var fullName:String? = null
     var dateOfBirth:String? = null
@@ -49,39 +43,41 @@ class AccountSettingFragment : Fragment() {
     val insertApi by lazy {
         InsertApi.create()
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val mView = inflater.inflate(R.layout.fragment_account_setting, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_dashboard)
+
         setDateTimeField()
-        mView.edtDateOfBirth.setOnTouchListener(object : View.OnTouchListener {
+
+        btnSaveChange.setOnClickListener {
+            updateUser()
+            Toast.makeText(this, "Update success", Toast.LENGTH_SHORT).show()
+        }
+
+        imgBack.setOnClickListener {
+            Intent(this, DashboardActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }
+
+        edtDateBirth.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 mDatePickerDialog!!.show()
                 return false
             }
         })
 
-        val imageDistance: ImageView =mView.findViewById(R.id.imgDistance)
 
-        Glide.with(this)
-            .load(R.drawable.distance)
-            .into(imageDistance);
+        btnChangePass.setOnClickListener {
+            Intent(this, ChangePassDashBoardActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }
         getInfoUser()
-        mView.btnSaveChange.setOnClickListener {
-            updateUser()
-            Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show()
-        }
-        mView.imgBackArrow.setOnClickListener {
-            childFragmentManager.beginTransaction().add(R.id.accountSt,SettingFragment.newInstance())
-                .addToBackStack(null).commit()
-        }
 
-        mView.btnChangePassword.setOnClickListener {
-            childFragmentManager.beginTransaction().add(R.id.accountSt,ChangePasswordFragment.newInstance())
-                .addToBackStack(null).commit()
-        }
-        return mView.rootView
     }
 
     private fun getInfoUser(){
@@ -96,7 +92,7 @@ class AccountSettingFragment : Fragment() {
                     address = result.data.address
                     numberPhone = result.data.numberPhone
                     edtFullName.setText(fullName)
-                    edtDateOfBirth.setText(dateOfBirth)
+                    edtDateBirth.setText(dateOfBirth)
                     edtAddress.setText(address)
                     edtNumberPhone.setText(numberPhone)
                     Log.i("abc", "abc: " + result.data.toString())
@@ -105,11 +101,10 @@ class AccountSettingFragment : Fragment() {
                 { error ->
 //                    Toast.makeText(context!!, "fail get", Toast.LENGTH_SHORT).show()
                     Log.i("abc", "abc: " + error.localizedMessage + error.message + error)
-                    Toast.makeText(context!!, error.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                 }
             )
     }
-
 
     private fun updateUser(){
         citizenId = AppPreferences.citizenId
@@ -131,14 +126,14 @@ class AccountSettingFragment : Fragment() {
                 { error ->
 //                    Toast.makeText(context!!, "fail get", Toast.LENGTH_SHORT).show()
                     Log.i("abc", "abc: " + error.localizedMessage + error.message + error)
-                    Toast.makeText(context!!, error.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                 }
             )
     }
 
     private fun setDateTimeField() {
         val newCalendar: Calendar = Calendar.getInstance()
-        mDatePickerDialog = context?.let {
+        mDatePickerDialog = this?.let {
             DatePickerDialog(
                 it, R.style.DialogTheme,
                 { view, year, monthOfYear, dayOfMonth ->
@@ -153,5 +148,4 @@ class AccountSettingFragment : Fragment() {
         }
         mDatePickerDialog!!.getDatePicker().setMaxDate(System.currentTimeMillis())
     }
-
 }

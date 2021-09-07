@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
             : View? {
         mView = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        onClicks()
+        onClicksLogout()
         checkedSound()
         checkedVibrate()
         mView.txtAccountSetting.setOnClickListener {
@@ -83,11 +83,13 @@ class SettingFragment : Fragment() {
     }
 
 
-    private fun onClicks() {
+    private fun onClicksLogout() {
         mView.btnLogout.setOnClickListener {
             AppPreferences.isLogin = false
             AppPreferences.username = ""
             AppPreferences.password = ""
+            AppPreferences.role = ""
+            AppPreferences.fullname = ""
             Intent(activity, LoginActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
