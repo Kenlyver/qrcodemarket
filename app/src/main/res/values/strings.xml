@@ -68,6 +68,11 @@
     <string name="enter_market_location">Enter market location</string>
     <string name="enter_url_image_qrcode_out">Enter url image qrcode(out)</string>
     <string name="enter_url_image_qrcode_in">Enter url image qrcode(in)</string>
+    <string name="update_market">Update Market</string>
+    <string name="image_qr_code_in">Image QR Code (In)</string>
+    <string name="image_qr_code_out">Image QR Code (Out)</string>
+    <string name="market_name">Market Name</string>
+    <string name="market_location">Market Location</string>
 
 
 </resources>

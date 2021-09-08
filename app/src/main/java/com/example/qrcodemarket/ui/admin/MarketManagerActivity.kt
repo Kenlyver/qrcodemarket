@@ -13,6 +13,7 @@ import com.example.qrcodemarket.data.model.getDataAccess
 import com.example.qrcodemarket.data.model.getMarket
 import com.example.qrcodemarket.data.network.InsertApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
+import com.example.qrcodemarket.util.toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -46,12 +47,25 @@ class MarketManagerActivity : AppCompatActivity() {
             }
         }
 
+
+
     }
 
     private fun showMarket(dataMarket:List<getMarket.Data>){
 
         recycleMarket.layoutManager = LinearLayoutManager(this)
-        recycleMarket.adapter = MarketAdapter(dataMarket)
+        recycleMarket.adapter = MarketAdapter(dataMarket,object:MarketAdapter.OnAdapterListener{
+            override fun onCLick(dataMarket: getMarket.Data) {
+                val intent = Intent(this@MarketManagerActivity,UpdateMarketActivity::class.java)
+                intent.putExtra("marketId",dataMarket.marketId)
+                intent.putExtra("marketName",dataMarket.marketName)
+                intent.putExtra("qrCodeManagementId",dataMarket.qrCodeManagementId)
+                intent.putExtra("marketLocation",dataMarket.marketLocation)
+                intent.putExtra("imageQRCodeIn",dataMarket.imageQRCodeIn)
+                intent.putExtra("imageQRCodeOut",dataMarket.imageQRCodeOut)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun getMarketData(){

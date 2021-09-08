@@ -51,6 +51,12 @@ interface InsertApi {
         @Path("id") id:Int,
         @Body data:UpdateUser.Data): Observable<UpdateUser.Response>
 
+    @PUT("updatemarket/{id}")
+    @Headers("Content-Type: application/json")
+    fun updateMarket(
+        @Path("id") id:Int,
+        @Body data:UpdateMarket.Data): Observable<UpdateMarket.Response>
+
 
     @PUT("updatepassword/{loginName}")
     @Headers("Content-Type: application/json")
@@ -64,7 +70,7 @@ interface InsertApi {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.4:80/myapi/public/")
+                .baseUrl("http://192.168.1.5:80/myapi/public/")
                 .build()
 
             return retrofit.create(InsertApi::class.java)

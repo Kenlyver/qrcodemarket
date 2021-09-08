@@ -11,6 +11,7 @@ object AppPreferences {
 
     //SharedPreferences variables
     private val IS_LOGIN = Pair("is_login", false)
+    private val CHECKIN = Pair("is_checkin", false)
     private val USERNAME = Pair("username", "")
     private val PASSWORD = Pair("password", "")
     private val FULLNAME = Pair("fullname", "")
@@ -36,6 +37,11 @@ object AppPreferences {
         get() = preferences.getBoolean(IS_LOGIN.first, IS_LOGIN.second)
         set(value) = preferences.edit {
             it.putBoolean(IS_LOGIN.first, value)
+        }
+    var checkin: Boolean
+        get() = preferences.getBoolean(CHECKIN.first, CHECKIN.second)
+        set(value) = preferences.edit {
+            it.putBoolean(CHECKIN.first, value)
         }
 
     var username: String

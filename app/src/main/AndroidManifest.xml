@@ -16,6 +16,8 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.QRCodeMarket"
             android:usesCleartextTraffic="true">
+        <activity android:name=".ui.admin.UpdateMarketActivity">
+        </activity>
         <activity android:name=".ui.home.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -44,7 +46,6 @@
         <activity android:name=".ui.auth.RegisterActivity">
         </activity>
         <activity android:name=".ui.auth.LoginActivity">
-
         </activity>
 
         <meta-data

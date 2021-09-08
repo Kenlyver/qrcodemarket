@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.qrcodemarket.R
 import kotlinx.android.synthetic.main.recycle_item.view.*
 
-class MarketAdapter (val market:List<getMarket.Data>): RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
+class MarketAdapter (val market:List<getMarket.Data>,val listener:OnAdapterListener)
+    : RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
+
+    interface OnAdapterListener{
+        fun onCLick(dataMarket:getMarket.Data)
+    }
 
     class MarketViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
@@ -23,6 +28,10 @@ class MarketAdapter (val market:List<getMarket.Data>): RecyclerView.Adapter<Mark
 
         holder.view.txtNameMarket.text = dataMarket.marketName
         holder.view.txtLocationEx.text= dataMarket.marketLocation
+
+        holder.view.txtLocationEx.setOnClickListener {
+            listener.onCLick(dataMarket)
+        }
 
     }
 
