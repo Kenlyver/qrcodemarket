@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QRCodeMarket</string>
+    <string name="app_name">QRMarket</string>
     <string name="qr_code_market">QR Code Market</string>
     <string name="enter_your_login_name">Enter your login name</string>
     <string name="let_s_join_hands_to_prevent_covid">Let\'s join hands to prevent Covid</string>
@@ -73,6 +73,4 @@
     <string name="image_qr_code_out">Image QR Code (Out)</string>
     <string name="market_name">Market Name</string>
     <string name="market_location">Market Location</string>
-
-
 </resources>

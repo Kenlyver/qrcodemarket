@@ -12,6 +12,8 @@ object AppPreferences {
     //SharedPreferences variables
     private val IS_LOGIN = Pair("is_login", false)
     private val CHECKIN = Pair("is_checkin", false)
+    private val CHECKEND = Pair("check_end", false)
+    private val CHECKOUT = Pair("check_out", false)
     private val USERNAME = Pair("username", "")
     private val PASSWORD = Pair("password", "")
     private val FULLNAME = Pair("fullname", "")
@@ -42,6 +44,18 @@ object AppPreferences {
         get() = preferences.getBoolean(CHECKIN.first, CHECKIN.second)
         set(value) = preferences.edit {
             it.putBoolean(CHECKIN.first, value)
+        }
+
+    var checkend: Boolean
+        get() = preferences.getBoolean(CHECKEND.first, CHECKEND.second)
+        set(value) = preferences.edit {
+            it.putBoolean(CHECKEND.first, value)
+        }
+
+    var checkout: Boolean
+        get() = preferences.getBoolean(CHECKOUT.first, CHECKOUT.second)
+        set(value) = preferences.edit {
+            it.putBoolean(CHECKOUT.first, value)
         }
 
     var username: String

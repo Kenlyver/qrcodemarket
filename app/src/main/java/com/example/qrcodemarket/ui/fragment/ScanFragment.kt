@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.qrcodemarket.R
-import com.example.qrcodemarket.data.model.AccessAdapter
 import com.example.qrcodemarket.data.model.InsertAccessMarket
 import com.example.qrcodemarket.data.network.InsertApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
@@ -21,12 +19,10 @@ import com.google.zxing.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_scan.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
 
@@ -51,6 +47,8 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
     var timeOut: String? = null
     var date: String? = null
     var idMarketIn: String? = null
+    val inString: String = "In"
+    val outString: String = "Out"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,6 +102,7 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
     override fun onStop() {
         super.onStop()
     }
+
     override fun onResume() {
         super.onResume()
         scannerView.setResultHandler(this) // Register ourselves as a handler for scan results.
@@ -122,11 +121,11 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
 
     override fun handleResult(rawResult: Result?) {
         var result: String = rawResult?.text.toString()
-        val inString: String = "In"
-        val outString: String = "Out"
+        AppPreferences.checkend = result.endsWith(inString)
+        AppPreferences.checkout = result.endsWith(outString)
         val checkIn = result.endsWith(inString)
         val checkOut = result.endsWith(outString)
-        if (checkIn) {
+        if (AppPreferences.checkend) {
             if (AppPreferences.checksound == true) {
                 val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                 tg.startTone(ToneGenerator.TONE_PROP_BEEP)
@@ -138,8 +137,8 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
             idMarketIn = result.get(0).toString()
             var dialog = CustomDialog()
             dialog.show(childFragmentManager, "custom")
-            checkInMarket = true
-        } else if (checkInMarket == true && checkOut) {
+            AppPreferences.checkin = true
+        } else if (AppPreferences.checkin == true && AppPreferences.checkout) {
             if (AppPreferences.checksound == true) {
                 val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                 tg.startTone(ToneGenerator.TONE_CDMA_CALL_SIGNAL_ISDN_PING_RING)
@@ -155,10 +154,16 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
                 insertAccessData()
                 Toast.makeText(context!!, "See you again later", Toast.LENGTH_SHORT).show()
                 checkInMarket = false
+                AppPreferences.checkin = false
+                AppPreferences.checkend = false
+                AppPreferences.checkout = false
             } else {
                 if (AppPreferences.checksound == true) {
                     val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                     tg.startTone(ToneGenerator.TONE_CDMA_SOFT_ERROR_LITE)
+                }
+                if (AppPreferences.checkvibrate == true) {
+                    vibratePhone()
                 }
                 Toast.makeText(context!!, "You scan wrong QRcode in this market", Toast.LENGTH_SHORT).show()
             }
@@ -166,6 +171,9 @@ class ScanFragment : Fragment(), ZXingScannerView.ResultHandler {
             if (AppPreferences.checksound == true) {
                 val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                 tg.startTone(ToneGenerator.TONE_CDMA_SOFT_ERROR_LITE)
+            }
+            if (AppPreferences.checkvibrate == true) {
+                vibratePhone()
             }
             Toast.makeText(context!!, "You scan wrong QRcode in this market", Toast.LENGTH_SHORT).show()
         }

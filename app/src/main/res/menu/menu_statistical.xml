@@ -12,18 +12,9 @@
                     android:title="All"
                     app:showAsAction="always"/>
             <item
-                    android:id="@+id/Ward"
-                    android:title="Market"
-                    app:showAsAction="always"/>
-            <item
-                    android:id="@+id/Market"
-                    android:title="Market"
-                    app:showAsAction="always"/>
-
-            <item
-                    android:id="@+id/Name"
-                    android:title="Name"
-                    app:showAsAction="always"
+                    android:id="@+id/Search"
+                    android:title="Search"
+                    app:showAsAction="always|collapseActionView"
                     app:actionViewClass="androidx.appcompat.widget.SearchView"
                     />
         </menu>

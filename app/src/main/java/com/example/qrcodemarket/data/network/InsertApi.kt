@@ -25,6 +25,10 @@ interface InsertApi {
     @Headers("Content-Type: application/json")
     fun dataAccessMarket(@Path("id") citizenId:Int): Observable<getDataAccess.Response>
 
+    @GET("allaccessbyfullname/{fullname}")
+    @Headers("Content-Type: application/json")
+    fun allaccessbyfullname(@Path("fullname") fullName:String): Observable<getAccessAllUser.Response>
+
     @GET("accessalluser")
     @Headers("Content-Type: application/json")
     fun accessAllUser(): Observable<getAccessAllUser.Response>

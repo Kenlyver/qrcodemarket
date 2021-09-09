@@ -3,31 +3,34 @@ package com.example.qrcodemarket.ui.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.text.toLowerCase
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qrcodemarket.R
 import com.example.qrcodemarket.data.model.AccessAllUserAdapter
-import com.example.qrcodemarket.data.model.MarketAdapter
 import com.example.qrcodemarket.data.model.getAccessAllUser
-import com.example.qrcodemarket.data.model.getMarket
 import com.example.qrcodemarket.data.network.InsertApi
+import com.example.qrcodemarket.ui.auth.AppPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_market_manager.*
 import kotlinx.android.synthetic.main.activity_statistical.*
 import kotlinx.android.synthetic.main.activity_statistical.imgBackArrow
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StatisticalActivity : AppCompatActivity() {
 
-
+    private lateinit var searchView: SearchView
+    var tempData:ArrayList<getAccessAllUser.Data>? = null
+    private lateinit var newData:List<getAccessAllUser.Data>
     var disposable : Disposable? = null
-    private lateinit var tempArrayList: List<getAccessAllUser.Data>
     val insertApi by lazy {
         InsertApi.create()
     }
@@ -51,6 +54,7 @@ class StatisticalActivity : AppCompatActivity() {
 
         recycleAllAccess.layoutManager = LinearLayoutManager(this)
         recycleAllAccess.adapter = AccessAllUserAdapter(dataAllAccess)
+
     }
 
     private fun getAllAccess(){
@@ -60,7 +64,7 @@ class StatisticalActivity : AppCompatActivity() {
             .subscribe(
                 { result ->
                     showAll(result.data)
-                    tempArrayList = result.data
+                    newData = result.data
                     Log.i("abc", "abc: " + result.data.toString())
 //                    Toast.makeText(context!!, "${result.message}", Toast.LENGTH_SHORT).show()
                 },
@@ -72,6 +76,21 @@ class StatisticalActivity : AppCompatActivity() {
             )
     }
 
+    private fun getAccessData(fullName:String){
+        disposable = insertApi.allaccessbyfullname(fullName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    showAll(result.data)
+                    Log.i("abc", "abc: " + result.data.toString())
+                },
+                { error ->
+                    Log.i("abc", "abc: " + error.localizedMessage + error.message + error)
+                }
+            )
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_statistical, menu)
         return true
@@ -79,31 +98,34 @@ class StatisticalActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.getItemId() == R.id.All) {
-
-            return true;
-        } else if (item.getItemId() == R.id.Ward) {
-
-            return true;
-        }else if (item.getItemId() == R.id.Market) {
-
-            return true;
-        }else if (item.getItemId() == R.id.Name) {
-            val searchView:SearchView = item.actionView as SearchView
+            getAllAccess()
+            return true
+        }
+        else if (item.getItemId() == R.id.Search) {
+            searchView = item.actionView as SearchView
+            searchView.setQueryHint("Search...")
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    TODO("Not yet implemented")
+                    query?.let { getAccessData(it) }
+                    return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    val searchText = newText!!.toLowerCase(Locale.getDefault())
+                    if (searchText.isNotEmpty()) {
 
+                    } else {
+
+                    }
                     return false
                 }
             })
-            return true;
+            return true
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 
